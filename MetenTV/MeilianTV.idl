@@ -1,0 +1,18 @@
+// MeilianTV.idl : MeilianTV 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(MeilianTV.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(2DF214F9-D92B-47A2-9E31-5BD1861D6010),
+	version(1.0),
+]
+library MeilianTVLib
+{
+	importlib("stdole2.tlb");
+};
+
