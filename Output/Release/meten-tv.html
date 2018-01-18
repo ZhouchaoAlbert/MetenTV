@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>美联电视台</title>
+  <script src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>
+  <script>
+    // init vConsole
+    var vConsole = new VConsole();
+  </script>
+  <link rel="stylesheet"
+        href="http://mia-upload.oss-cn-shanghai.aliyuncs.com/course/static/video-js-6.3.3/video-js.min.css?_=14">
+  <style>
+    html {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      background-color: #0e0f13;
+      font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, \\5FAE\8F6F\96C5\9ED1, Arial, sans-serif;
+      font-size: 14px;
+      color: #666;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .root.tv {
+      height: 100%;
+    }
+
+    .root.tv .container {
+      width: 65%;
+      height: 100%;
+      max-width: 1150px;
+      margin: 0 auto
+    }
+
+    .root.tv .container img {
+      height: 98%;
+      top: 2%;
+      position: relative;
+    }
+
+    .root.tv.pc .container img {
+      /*height: 45px;*/
+    }
+
+    .root.tv .top {
+      box-sizing: border-box;
+      background-color: #fff;
+      height: 37px;
+      /*padding: 7px 0 0 0*/
+    }
+    .root.tv.pc .top {
+      height: 75px;
+      /*padding: 15px 0 0 0*/
+    }
+
+    .root.tv .top span {
+      font-size: 14px;
+      color: #055c87;
+      border-left: 1px solid #b8b8b8;
+      padding: 0 0 0 7px;
+      margin-left: 6px;
+      position: relative;
+      top: -7px;
+      font-weight: 800;
+    }
+
+    .root.tv.pc .top span {
+      font-size: 28px;
+      padding: 0 0 0 15px;
+      margin-left: 12px;
+      top: -15px;
+    }
+
+    .root.tv .content .v-title {
+      font-size: 14px;
+      color: #fff;
+      padding: 20px 0 12px;
+      margin-left: 12px
+    }
+
+    .root.tv.pc .content .v-title {
+      font-size: 28px;
+      padding: 40px 0 24px;
+      margin-left: 24px
+    }
+
+    .root.tv .content .v-title span {
+      font-size: 10px;
+      color: #fff;
+      position: relative;
+      top: -1px;
+      margin-left: 5px;
+    }
+
+    .root.tv.pc .content .v-title span {
+      font-size: 20px;
+      top: -2px;
+      margin-left: 10px;
+    }
+
+    .root.tv .content .v-title span.replaying {
+      background-color: #2779dd;
+      padding: 4px 6px;
+      border-radius: 3px
+    }
+
+    .root.tv.pc .content .v-title span.replaying {
+      padding: 8px 12px;
+      border-radius: 6px
+    }
+
+    .root.tv .content .v-title span.living {
+      background-color: #e4243a;
+      padding: 4px 9px;
+      border-radius: 25px
+    }
+
+    .root.tv.pc .content .v-title span.living {
+      padding: 8px 18px;
+      border-radius: 50px
+    }
+
+    .root.tv .content .v-frame {
+      position: relative;
+      width: 100%;
+      height: 370px;
+      max-width: 1140px;
+      min-height: 370px;
+      border: 1px solid #445464;
+      background-color: #23262b;
+      box-shadow: 0 0 53px 9px rgba(34, 87, 124, 0.4)
+    }
+
+    .root.tv.pc .content .v-frame {
+      min-height: 680px;
+      height: 680px;
+    }
+
+    .root.tv .content .v-frame .v-video {
+      height: 100%;
+    }
+    .root.tv.pc .content .v-frame .v-video {
+      height: 100%;
+    }
+
+    .root.tv .content .v-frame .vjs-big-play-button {
+      display: none !important;
+    }
+
+    .root.tv .content .v-frame .pop-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 9999999999;
+    }
+
+    .root.tv .content .v-frame .pop {
+      /*width: 540px;*/
+      width: 30%;
+      padding: 27px 0;
+      text-align: center;
+      /*margin: -150px 0 0 -270px;*/
+      border-radius: 8px;
+      background-color: rgba(23, 25, 33, 0.8);
+      box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.235);
+      /*position: absolute;*/
+      top: 50%;
+      left: 50%;
+    }
+
+    .root.tv.pc .content .v-frame .pop {
+      padding: 55px 0;
+    }
+
+    .root.tv .content .v-frame .pop p {
+      font-size: 18px;
+      color: #fff;
+      margin: 0;
+    }
+
+    .root.tv.pc .content .v-frame .pop p {
+      font-size: 36px;
+    }
+
+    .root.tv .content .v-frame .pop p.time {
+      font-size: 30px;
+      color: #ffc600;
+      margin: 5px 0
+    }
+
+    .root.tv.pc .content .v-frame .pop p.time {
+      font-size: 60px;
+    }
+
+    .root.tv .content .v-frame .pop p.time b {
+      font-weight: normal;
+      font-size: 36px
+    }
+
+    .root.tv.pc .content .v-frame .pop p.time b {
+      font-size: 72px
+    }
+
+    .root.tv .content .v-frame .loading-wrapper {
+      z-index: 9999999998;
+      position: absolute !important;
+      border: none !important;
+      background-color: #23262b;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    .root.tv .content .v-frame .loading-wrapper.fullscreen {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center
+    }
+
+    .root.tv .content .v-frame .loading-wrapper.fullscreen .loading {
+      position: relative;
+      top: 0;
+      left: 0;
+      margin-left: 0
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading {
+      width: 320px;
+      text-align: center;
+      padding: 60px 0 0 0;
+      position: absolute;
+      top: 75px;
+      left: 50%;
+      margin-left: -100px
+    }
+
+    .root.tv.pc .content .v-frame .loading-wrapper .loading {
+      width: 400px;
+      padding: 120px 0 0 0;
+      /*top: 150px;*/
+      /*margin-left: -200px*/
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .l-animate {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      margin-left: -24px
+    }
+
+    .root.tv.pc .content .v-frame .loading-wrapper .loading .l-animate {
+      margin-left: -48px
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .dot {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 45px;
+      height: 45px;
+      animation: 1.7s dotrotate cubic-bezier(.775, .005, .31, 1) infinite;
+      -webkit-animation: 1.7s dotrotate cubic-bezier(.775, .005, .31, 1) infinite
+    }
+
+    .root.tv.pc .content .v-frame .loading-wrapper .loading .dot {
+      width: 90px;
+      height: 90px;
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .dot:after, .root.tv .content .v-frame .loading-wrapper .loading .dot .first {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: #9299a1;
+      border-radius: 50%;
+      left: 50%;
+      margin-left: -3px
+    }
+
+    .root.tv.pc .content .v-frame .loading-wrapper .loading .dot:after, .root.tv .content .v-frame .loading-wrapper .loading .dot .first {
+      width: 10px;
+      height: 10px;
+      margin-left: -6px
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .dot .first {
+      margin-top: -3px;
+      animation: 1.7s dotscale cubic-bezier(.775, .005, .31, 1) infinite;
+      -webkit-animation: 1.7s dotscale cubic-bezier(.775, .005, .31, 1) infinite;
+      -webkit-animation-delay: .2s;
+      animation-delay: .2s
+    }
+
+    .root.tv.pc .content .v-frame .loading-wrapper .loading .dot .first {
+      margin-top: -6px;
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .dot:nth-child(1) {
+      -webkit-animation-delay: .2s;
+      animation-delay: .2s
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .dot:nth-child(2) {
+      -webkit-animation-delay: .35s;
+      animation-delay: .35s
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .dot:nth-child(3) {
+      -webkit-animation-delay: .45s;
+      animation-delay: .45s
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .dot:nth-child(4) {
+      -webkit-animation-delay: .55s;
+      animation-delay: .55s
+    }
+
+    .root.tv .content .v-frame .loading-wrapper .loading .dot:nth-child(5) {
+      -webkit-animation-delay: .65s;
+      animation-delay: .65s
+    }
+
+    .root.tv .content .v-frame .play-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 200px;
+      border: 4px solid #fff;
+      background-color: rgba(0,0,0,0.6);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -54px 0 0 -54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .root.tv .content .v-frame .play-icon img {
+      width: 40%;
+      height: auto;
+      margin-left: 10px;
+    }
+
+    .root.tv .content .v-frame .empty-mask {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #23262b;
+      z-index: 1;
+    }
+
+    .root.tv .content .v-frame .empty-mask img {
+      width: 40%;
+      height: auto;
+    }
+
+    @keyframes dotrotate {
+      from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+      }
+      to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+      }
+    }
+
+    @-webkit-keyframes dotrotate {
+      from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+      }
+      to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes dotscale {
+      0%, 10% {
+        width: 8px;
+        height: 8px;
+        margin-left: -4px;
+        margin-top: -2px
+      }
+      50% {
+        width: 4px;
+        height: 4px;
+        margin-left: -2px;
+        margin-top: 0
+      }
+      80%, 100% {
+        width: 8px;
+        height: 8px;
+        margin-left: -4px;
+        margin-top: -2px
+      }
+    }
+
+    @-webkit-keyframes dotscale {
+      0%, 10% {
+        width: 8px;
+        height: 8px;
+        margin-left: -4px;
+        margin-top: -2px
+      }
+      50% {
+        width: 4px;
+        height: 4px;
+        margin-left: -2px;
+        margin-top: 0
+      }
+      80%, 100% {
+        width: 8px;
+        height: 8px;
+        margin-left: -4px;
+        margin-top: -2px
+      }
+    }
+
+    .root.tv .content .v-frame .announce {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      text-align: center;
+      top: 120px;
+      background-color: #000
+    }
+
+    .root.tv .content .v-frame .announce p {
+      font-size: 18px;
+      color: #cacfd5;
+      margin-bottom: 8px
+    }
+
+    .root.tv .content .v-frame .video-js .vjs-big-play-button {
+      display: block;
+      top: 50%;
+      left: 50%;
+      margin: -15px 0 0 -27px
+    }
+
+    .root.tv .content .v-frame .video-js.vjs-has-started .vjs-big-play-button {
+      display: none
+    }
+
+    .root.tv .content .v-frame .video-js .vjs-control-bar {
+      /*opacity: 0 !important*/
+    }
+
+    .root.tv .video-js.android .vjs-big-play-button {
+      border-radius: 50%;
+      height: 40px;
+      width: 40px
+    }
+
+    .root.tv .video-js.android .vjs-big-play-button:before {
+      position: relative;
+      top: 2px;
+      font-size: 22px
+    }
+
+    /*videojs*/
+    .vjs-volume-panel {
+      display: none !important;
+    }
+    .vjs-icon-placeholder:before{
+      font-size: 24px;
+      top: -3px !important;
+      position: relative !important;
+    }
+
+  </style>
+  <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/jquery-1.11.3.min.js?_=14"></script>
+  <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/course/static/video-js-6.3.3/video.min.js?_=1"></script>
+  <script
+      src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/course/static/videojs-contrib-hls.5.12.2.min.js?_=14"></script>
+  <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/reconnect-websocket.js?_=14"></script>
+  <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/Base64.js"></script>
+  <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/main.js?_=76"></script>
+  <!--<script src="./main.js?_=36"></script>-->
+</head>
+<body>
+<div class="root">
+  <p class="log"></p>
+  <div class="root tv">
+    <div class="top">
+      <div class="container">
+        <img src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/meten-logo.png"/>
+        <!--<span>美联电视台</span>-->
+      </div>
+    </div>
+    <div class="content">
+      <div class="container">
+        <div class="v-title">
+          正在播放：教你一节课玩转英语
+          <span class="replaying">精选视频</span>
+          <span class="living" style="display:none">直播中</span>
+        </div>
+        <div class="v-frame">
+          <div class="v-video">
+            <!--<div style="position:absolute;height: 100%;width:100%;z-index: 9999999999;"></div>-->
+            <video id="metenVideo" class="video-js android"
+                   controls preload="auto" style="width: 100%;height: 100%;">
+            </video>
+          </div>
+
+          <div class="loading-wrapper fullscreen" style="display: none">
+            <div class="loading">
+              <div class="l-animate">
+                <div class="dot">
+                  <div class="first"></div>
+                </div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+              <img
+                  src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/loading-text.png">
+            </div>
+          </div>
+          <div class="pop-wrapper live" style="display: none">
+            <div class="pop">
+              <p>美联直播节目已开始</p>
+              <p class="time"><b>0</b>s</p>
+              <p>后自动进入直播</p>
+            </div>
+          </div>
+          <div class="pop-wrapper video" style="display: none">
+            <div class="pop">
+              <p>美联直播节目已结束</p>
+              <p class="time"><b>0</b>s</p>
+              <p>后自动进入精选视频</p>
+            </div>
+          </div>
+
+          <div class="play-icon">
+            <img src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/play.png">
+          </div>
+          <div class="empty-mask">
+            <img src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/loading-text-large.png">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
