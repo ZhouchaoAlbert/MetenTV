@@ -43,8 +43,11 @@ void	LogicCenter::OnJsEvent_GetList()
 void	LogicCenter::OnJsEvent_SyncList(const map<CString, CString>& list)	//id->url
 {
 	m_seq++;
+	CString strFolder = Util::Path::GetDTmpFolder() + _T("\\");
 	for (map<CString, CString>::const_iterator it = list.begin(); it != list.end(); it++)
 	{
+		Util::Log::Info(_T("TVCenter"), _T("sync id(.mp4 name): %s, url: %s"), it->first, it->second);
+
 		map<CString, FileItem>::iterator it2 = m_items.find(it->first);
 		if (it2 == m_items.end())
 		{
@@ -73,15 +76,33 @@ void	LogicCenter::OnJsEvent_SyncList(const map<CString, CString>& list)	//id->ur
 				Util::FileTrans::HttpDownLoad::Stop(it->second.task_id);
 				it->second.state = FIE_DISCARD;
 			}
+
+			//安全校验，避免外部修改配置文件导致误操作
+			if (it->second.filepath.Find(strFolder, 0) == 0 && Util::Path::IsFileExist(it->second.filepath))
+			{
+				Util::Log::Info(_T("TVCenter"), _T("delete file: %s"), it->second.filepath);
+				DeleteFile(it->first);
+			}
+
 			m_items.erase(it++);
 		}
 		else
 		{
 			if (it->second.state == FIE_NONE)
 			{
-				it->second.filepath = Util::Path::GetDTmpFolder() + _T("\\") + it->first + _T(".mp4");
-				Util::FileTrans::HttpDownLoad::DownLoad(it->second.url, it->second.filepath, Util::FileTrans::FILE_TYPE_NORMAL, this, &it->second.task_id);
+				it->second.filepath = strFolder + it->first + _T(".mp4");
 				it->second.state = FIE_DOWNING;
+			}
+			if (it->second.state == FIE_DOWNING)	
+			{
+				UINT32 ret = Util::FileTrans::HttpDownLoad::DownLoad(it->second.url, it->second.filepath, Util::FileTrans::FILE_TYPE_NORMAL, this, &it->second.task_id);
+				if (Util::FileTrans::c_file_repeat == ret)
+				{
+					it->second.task_id = 0;
+					it->second.state = FIE_AVAILABLE;
+					CallJs_DownCompleted(it->first, it->second.filepath);
+					Util::Log::Info(_T("TVCenter"), _T("down exist id: %s, path: %s, url: %s"), it->first, it->second.filepath, it->second.url);
+				}
 			}
 			it++;
 		}
@@ -213,15 +234,18 @@ void	LogicCenter::LoadConf()
 
 	for (vector<CString>::iterator it = vSections.begin(); it != vSections.end(); it++)
 	{
-		FileItem	fi;
-
 		TCHAR szTemp[1024] = {0};
-		GetPrivateProfileString(*it, _T("FilePath"), _T(""), szTemp, sizeof(szTemp)-1, m_strConfFilePath);
-		fi.filepath = szTemp;
 		GetPrivateProfileString(*it, _T("State"), _T(""), szTemp, sizeof(szTemp)-1, m_strConfFilePath);
-		fi.state = GetStateCodeByStr(szTemp);
+		FILE_ITEM_STATE fis = GetStateCodeByStr(szTemp);
+		if (FIE_DISCARD != fis)
+		{
+			FileItem	fi;
+			GetPrivateProfileString(*it, _T("FilePath"), _T(""), szTemp, sizeof(szTemp)-1, m_strConfFilePath);
+			fi.filepath = szTemp;
+			fi.state = fis;
 
-		m_items[*it] = fi;
+			m_items[*it] = fi;
+		}
 	}
 }
 
