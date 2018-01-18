@@ -1,0 +1,18 @@
+// Common.idl : Common 的 IDL 源
+//
+
+// 此文件将由 MIDL 工具处理以
+// 产生类型库(Common.tlb)和封送处理代码。
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(9D2737EE-73B2-446C-9621-FE53EFF05538),
+	version(1.0),
+]
+library CommonLib
+{
+	importlib("stdole2.tlb");
+};
+

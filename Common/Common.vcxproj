@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5589D891-F388-4594-8AAF-DACE0EAE4AB3}</ProjectGuid>
+    <Keyword>AtlProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\Output\Debug\</OutDir>
+    <TargetName>$(ProjectName)D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Output\Release\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_USRDLL;_ATL_NO_COM_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Include;..\Include\curl</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName>Common_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>Common_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>Common_p.c</ProxyFileName>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)Common.tlb</TypeLibraryName>
+      <DllDataFileName />
+      <ValidateAllParameters>true</ValidateAllParameters>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <ModuleDefinitionFile>.\Common.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <RegisterOutput>true</RegisterOutput>
+      <AdditionalDependencies>libcurlD.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Lib\</AdditionalLibraryDirectories>
+      <ImportLibrary>..\Lib\$(TargetName).lib</ImportLibrary>
+      <ProgramDatabaseFile>..\Output\PdbD\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;_ATL_NO_COM_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Include;..\Include\curl</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName>Common_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName>Common_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>Common_p.c</ProxyFileName>
+      <GenerateStublessProxies>true</GenerateStublessProxies>
+      <TypeLibraryName>$(IntDir)Common.tlb</TypeLibraryName>
+      <DllDataFileName />
+      <ValidateAllParameters>true</ValidateAllParameters>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <ModuleDefinitionFile>.\Common.def</ModuleDefinitionFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <RegisterOutput>false</RegisterOutput>
+      <AdditionalDependencies>libcurl.lib;Psapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Lib\</AdditionalLibraryDirectories>
+      <ImportLibrary>..\Lib\$(TargetName).lib</ImportLibrary>
+      <ProgramDatabaseFile>..\Output\Pdb\$(TargetName).pdb</ProgramDatabaseFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AssociateMsgMgr.cpp" />
+    <ClCompile Include="BaseFile.cpp" />
+    <ClCompile Include="Common.cpp" />
+    <ClCompile Include="Common_i.c">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="DownLoadFileMgr.cpp" />
+    <ClCompile Include="DownLoadHelper.cpp" />
+    <ClCompile Include="DownLoadSink.cpp" />
+    <ClCompile Include="DownLoadWork.cpp" />
+    <ClCompile Include="LogNew.cpp" />
+    <ClCompile Include="MD5Helper.cpp" />
+    <ClCompile Include="md5_c.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ThreadPoolMgr2.cpp" />
+    <ClCompile Include="UtilFileTrans.cpp" />
+    <ClCompile Include="Utilkobj.cpp" />
+    <ClCompile Include="UtilLog.cpp" />
+    <ClCompile Include="UtilPath.cpp" />
+    <ClCompile Include="UtilString.cpp" />
+    <ClCompile Include="UtilThreadPool2.cpp" />
+    <ClCompile Include="UtilTime.cpp" />
+    <ClCompile Include="UtilTools.cpp" />
+    <ClCompile Include="UtilWinMsg.cpp" />
+    <ClCompile Include="WinMsgMgr.cpp" />
+    <ClCompile Include="WinMsgWnd.cpp" />
+    <ClCompile Include="xdlldata.c">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="XTimerMgr.cpp" />
+    <ClCompile Include="XTimerSinkHelper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Include\BaseFile.h" />
+    <ClInclude Include="..\Include\EventSupport.h" />
+    <ClInclude Include="..\Include\MD5Helper.h" />
+    <ClInclude Include="..\Include\Singleton.h" />
+    <ClInclude Include="..\Include\UtilFileTrans.h" />
+    <ClInclude Include="..\Include\Utilkobj.h" />
+    <ClInclude Include="..\Include\UtilLog.h" />
+    <ClInclude Include="..\Include\UtilPath.h" />
+    <ClInclude Include="..\Include\UtilString.h" />
+    <ClInclude Include="..\Include\UtilThreadPool2.h" />
+    <ClInclude Include="..\Include\UtilTime.h" />
+    <ClInclude Include="..\Include\UtilTools.h" />
+    <ClInclude Include="..\Include\UtilWinMsg.h" />
+    <ClInclude Include="..\Include\VersionDefault.h" />
+    <ClInclude Include="..\Include\XTimerSinkHelper.h" />
+    <ClInclude Include="AssociateMsgMgr.h" />
+    <ClInclude Include="Common_i.h" />
+    <ClInclude Include="dllmain.h" />
+    <ClInclude Include="DownLoadFileMgr.h" />
+    <ClInclude Include="DownLoadFileMgrEvent.h" />
+    <ClInclude Include="DownLoadHelper.h" />
+    <ClInclude Include="DownLoadSink.h" />
+    <ClInclude Include="DownLoadWork.h" />
+    <ClInclude Include="hash_md5.h" />
+    <ClInclude Include="LogNew.h" />
+    <ClInclude Include="md5.h" />
+    <ClInclude Include="md5_c.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="ThreadPoolMgr2.h" />
+    <ClInclude Include="WinMsgMgr.h" />
+    <ClInclude Include="WinMsgWnd.h" />
+    <ClInclude Include="xdlldata.h" />
+    <ClInclude Include="XTimerMgr.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Common.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Common.def" />
+    <None Include="Common.rgs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="Common.idl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
