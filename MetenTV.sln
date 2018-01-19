@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcef_2924", "libcef_2924\libcef_2924.vcxproj", "{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcef_2623(XP)", "libcef_2623\libcef_2623.vcxproj", "{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{5589D891-F388-4594-8AAF-DACE0EAE4AB3}"
@@ -26,14 +24,6 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.Debug|Win32.Build.0 = Debug|Win32
-		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.NonXP_Debug|Win32.ActiveCfg = NonXP_Debug|Win32
-		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.NonXP_Debug|Win32.Build.0 = NonXP_Debug|Win32
-		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.NonXP_Release|Win32.ActiveCfg = NonXP_Release|Win32
-		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.NonXP_Release|Win32.Build.0 = NonXP_Release|Win32
-		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.Release|Win32.ActiveCfg = Release|Win32
-		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.Release|Win32.Build.0 = Release|Win32
 		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.Debug|Win32.ActiveCfg = Debug|Win32
 		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.Debug|Win32.Build.0 = Debug|Win32
 		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.NonXP_Debug|Win32.ActiveCfg = NonXP_Debug|Win32
@@ -69,5 +59,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36651F3C-A339-4799-A587-059A537002D1}
 	EndGlobalSection
 EndGlobal

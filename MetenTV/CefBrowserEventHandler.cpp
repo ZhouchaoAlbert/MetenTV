@@ -155,7 +155,7 @@ bool CCefBrowserEventHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser> bro
 		CStringA strContent;
 		Util::String::W_2_Utf8(strJsonData1, strContent);
 
-
+		static UINT32 s_count = 0;
 		Util::Log::Info(_T("MentenPV"), _T("Func:%s,JS:Cmd: %s,Json:%s"), strFuncName1, scmd1, strJsonData1);
 
 		GetSafeChannel()->Js2Cpp(scmd1, strContent);

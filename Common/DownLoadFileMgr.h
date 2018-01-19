@@ -38,7 +38,7 @@ public:
 	//上层对象被析够  移除该关联的所有的Sink信息
 	void RemoveSink(Util::FileTrans::HttpDownLoad::CHttpDownLoadEvent* pSink);
 public:
-	UINT32 DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, Util::FileTrans::FILETYPE filetype, Util::FileTrans::HttpDownLoad::CHttpDownLoadEvent*pListen, UINT64* pTaskID, BOOL bShowProgress);
+	UINT32 DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, Util::FileTrans::FILETYPE filetype, Util::FileTrans::HttpDownLoad::CHttpDownLoadEvent*pListen, UINT64* pTaskID, BOOL bShowProgress, BOOL bTempFileMode);
 	UINT32 Stop(UINT64 TaskID);
 
 

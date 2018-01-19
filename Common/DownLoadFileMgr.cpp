@@ -80,7 +80,7 @@ UINT32 CDownLoadFileMgr::Stop(UINT64 TaskID)
 	}
 	return Util::FileTrans::c_suc;
 }
-UINT32 CDownLoadFileMgr::DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, Util::FileTrans::FILETYPE filetype, Util::FileTrans::HttpDownLoad::CHttpDownLoadEvent*pListen, UINT64* pTaskID, BOOL bShowProgress)
+UINT32 CDownLoadFileMgr::DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, Util::FileTrans::FILETYPE filetype, Util::FileTrans::HttpDownLoad::CHttpDownLoadEvent*pListen, UINT64* pTaskID, BOOL bShowProgress, BOOL bTempFileMode)
 {
 	if (NULL == pszUrl || NULL==pszLocalFilePath)
 		return Util::FileTrans::c_fail;
@@ -114,6 +114,7 @@ UINT32 CDownLoadFileMgr::DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, Util
 	pFileInfo->filetype = filetype;
 	pFileInfo->strFileLocalPath = pszLocalFilePath;
 	pFileInfo->strUrl = pszUrl;
+	pFileInfo->bTempFileMode = bTempFileMode;
 	UINT64 nThreadID = Util::ThreadPool2::AddTask(Util::ThreadPool2::TSC_FILETRANS_DOWN_FILE, pCDownloadSink, pCDownloadWork, pFileInfo);
 	*pTaskID = nThreadID;
 	if (0 == nThreadID)

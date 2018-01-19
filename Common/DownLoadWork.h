@@ -34,7 +34,7 @@ public:
 	INT64 m_nDlFlag;           //use calculate the time
 
 	UINT64  m_uStartSeverTime;
-
+	BOOL m_bTempFileMode;
 	double m_dInitialLen;     //
 private:
 	Util::FileTrans::FILETYPE	 m_filetype;

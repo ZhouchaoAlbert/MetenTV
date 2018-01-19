@@ -15,6 +15,7 @@ CDownLoadWork::CDownLoadWork()
 	m_dInitialLen = 0;
 	m_nDlFlag = 0; 
 	m_uStartSeverTime = 0;
+	m_bTempFileMode = FALSE;
 }
 
 
@@ -121,6 +122,7 @@ void CDownLoadWork::Run_InWorkThread(void* pParam)
 	if (NULL != pDownloadFileInfo)
 	{
 		m_uStartSeverTime = pDownloadFileInfo->uSeverTime;
+		m_bTempFileMode = pDownloadFileInfo->bTempFileMode;
 		StartDownLoadFile(pDownloadFileInfo->strUrl, pDownloadFileInfo->strFileLocalPath);
 	}
 	
@@ -180,7 +182,7 @@ double CDownLoadWork::GetFileSeverLength(CString strUrl)
 	CStringA szfileurl;
 	Util::String::W_2_A(strUrl, szfileurl);
 	double len = 0.0;
-
+	long filesize = 0;
 	CURL *handle = curl_easy_init();
 
 	curl_easy_setopt(handle, CURLOPT_URL, szfileurl.GetString());
@@ -190,6 +192,7 @@ double CDownLoadWork::GetFileSeverLength(CString strUrl)
 	curl_easy_setopt(handle, CURLOPT_NOBODY, 1);    //不需求body
 
 	curl_easy_setopt(handle, CURLOPT_HEADERFUNCTION, save_header); // 取数据时连同HTTP头部一起取回.
+	curl_easy_setopt(handle, CURLOPT_HEADERDATA, &filesize);
 	CURLcode retcCode = curl_easy_perform(handle);
 
 	if (retcCode == CURLE_OK)
@@ -224,10 +227,14 @@ UINT64  CDownLoadWork::CheckFileResumDownLoad(CString strUrl, CString strFileLoc
 	if (Util::Path::IsFileExist(strFileTempLocalPath))
 	{
 		uFileLen = Util::Path::GetFileLength(strFileTempLocalPath);
+		if (TRUE == m_bTempFileMode)
+		{
+			DeleteFile(strFileTempLocalPath);
+		}
 		//double dFileSeverLen = GetFileSeverLength(strUrl);     //这边服务端校验先去掉 cos 这边还不支持Header 请求，而 且这边仅仅是拿服务端 文件大小而已
 		//if (dFileSeverLen <= 0)
 		//{
-		//	//ATLASSERT(FALSE);    //dFileSeverLen 获取服务端的len 失败了  将会忽略对本地数据的校验
+		//	ATLASSERT(FALSE);    //dFileSeverLen 获取服务端的len 失败了  将会忽略对本地数据的校验
 		//	;
 		//}
 		//else
@@ -239,6 +246,12 @@ UINT64  CDownLoadWork::CheckFileResumDownLoad(CString strUrl, CString strFileLoc
 		//	}
 		//}
 	}
+	if (TRUE == m_bTempFileMode)
+	{
+		if (Util::Path::IsFileExist(strFileLocalPath))
+			DeleteFile(strFileLocalPath);
+	}
+	
 	m_dInitialLen = (double)uFileLen;
 	return uFileLen;
 }
@@ -319,7 +332,7 @@ ERROR_CODE  CDownLoadWork::DownFile(CString strFileTempPath, CString strUrl, UIN
 		{
 			INT32 nRes=_trename(strFileTempPath, strFilePath);
 			if (0!=nRes)
-				Log_InWorkThread(Util::Log::E_RLL_ERROR, _T("[%s][%d][down_error] rename error code=[%d] url=[%s]"), __FUNCTIONW__, __LINE__, nRes,strUrl);
+				Log_InWorkThread(Util::Log::E_RLL_ERROR, _T("[%s][%d][down_error] rename error code=[%d] url=[%s], hr: 0x%x"), __FUNCTIONW__, __LINE__, nRes,strUrl, GetLastError());
 		}
 	}
 	return code;

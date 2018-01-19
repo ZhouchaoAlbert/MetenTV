@@ -31,6 +31,7 @@ struct DownloadFileInfo
 	CString						 strFileLocalPath;           //要下载文件的本地路径
 	Util::FileTrans::FILETYPE	filetype;                 //类型
 	UINT64                    uSeverTime;               //当前开始下载的服务端时间  用来签名使用
+	BOOL     bTempFileMode;  //临时文件
 };
 
 struct DownLoadResult

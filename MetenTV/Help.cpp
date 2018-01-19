@@ -42,7 +42,7 @@ void ExecJavaScript(CefRefPtr<CefBrowser> browser, LPCTSTR szCmd, LPCSTR szJsonD
 	strJsCode.Append(szJsonData);
 	strJsCode.Append(")");
 
-	//strJsCode = "miaCPP2Js(\"fileList\", \"{\"filepath\":\"C://Users//18008//Documents//MelianTV//123456789.mp4\", \"id\" : \"123456789\"}\")";
+	//strJsCode = "miaCPP2Js(\"fileList\", \"{\"filepath\":\"C://Users//18008//Documents//MetenTV//123456789.mp4\", \"id\" : \"123456789\"}\")";
 	//strJsCode = "miaCPP2Js(\"fileList\", {})";
 
 	args->SetString(0, CefString(strJsCode));

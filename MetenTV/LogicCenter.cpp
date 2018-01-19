@@ -12,7 +12,9 @@ LogicCenter::LogicCenter() : m_seq(0), m_MainHtml_TaskID(0)
 	m_strConfFilePath = Util::Path::GetDTmpFolder() + _T("\\FileConfig.ini");
 
 	m_strMainHtmlFile = Util::Path::GetDTmpFolder() + _T("\\meten-tv_check.html");
-	Util::FileTrans::HttpDownLoad::DownLoad(_T("http://coursetest.miamusic.com/meten-tv.html"), m_strMainHtmlFile, Util::FileTrans::FILE_TYPE_NORMAL, this, &m_MainHtml_TaskID);
+	DeleteFile(m_strMainHtmlFile);
+	Util::Log::Info(_T("TVCenter"), _T("delete mainfile_bak: %s, hr: 0x%x"), m_strMainHtmlFile, GetLastError());
+	Util::FileTrans::HttpDownLoad::DownLoad(_T("http://coursetest.miamusic.com/meten-tv.html"), m_strMainHtmlFile, Util::FileTrans::FILE_TYPE_NORMAL, this, &m_MainHtml_TaskID, FALSE, TRUE);
 
 	LoadConf();
 }
@@ -80,8 +82,8 @@ void	LogicCenter::OnJsEvent_SyncList(const map<CString, CString>& list)	//id->ur
 			//安全校验，避免外部修改配置文件导致误操作
 			if (it->second.filepath.Find(strFolder, 0) == 0 && Util::Path::IsFileExist(it->second.filepath))
 			{
-				Util::Log::Info(_T("TVCenter"), _T("delete file: %s"), it->second.filepath);
-				DeleteFile(it->first);
+				DeleteFile(it->second.filepath);
+				Util::Log::Info(_T("TVCenter"), _T("delete file: %s, hr: 0x%x"), it->second.filepath, GetLastError());
 			}
 
 			m_items.erase(it++);

@@ -97,7 +97,7 @@ CString Util::Path::GetDataFolder(BOOL bCreateIfNotExist/* = FALSE*/)
 	TCHAR szDocuments[MAX_PATH] = { 0 };
 	MyGetFolderPath(CSIDL_PERSONAL, szDocuments);
 	CString strDir;
-	strDir.Format(_T("%s\\MelianTV"), szDocuments);
+	strDir.Format(_T("%s\\MetenTV"), szDocuments);
 
 	if (FALSE != bCreateIfNotExist)
 	{

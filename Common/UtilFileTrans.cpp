@@ -12,9 +12,9 @@ Util::FileTrans::HttpDownLoad::CHttpDownLoadEvent::~CHttpDownLoadEvent()
 }
 
 //下载文件相关问题
-UINT32 Util::FileTrans::HttpDownLoad::DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, FILETYPE type, CHttpDownLoadEvent*pListen, UINT64* pTaskID, BOOL bShowProgress)
+UINT32 Util::FileTrans::HttpDownLoad::DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, FILETYPE type, CHttpDownLoadEvent*pListen, UINT64* pTaskID, BOOL bShowProgress, BOOL bTempFileMode)
 {
-	 return Singleton<CDownLoadFileMgr>::Instance().DownLoad(pszUrl, pszLocalFilePath, type, pListen, pTaskID, bShowProgress);
+	return Singleton<CDownLoadFileMgr>::Instance().DownLoad(pszUrl, pszLocalFilePath, type, pListen, pTaskID, bShowProgress,bTempFileMode);
 }
 
 UINT32 Util::FileTrans::HttpDownLoad::Stop(UINT64 TaskID)

@@ -51,8 +51,9 @@ namespace Util
 			pListen               ：文件上传进度 结果的回调指针
 			pTaskID               ： 启动任务之后返回的工作ID  唯一标志
 			bShowProgress  ；  是否需要显示进度 
+			bTempFileMode;  //临时文件 若次参数为TRUE则会删除已经存在的temp文件
 			*/
-			COMMON_API UINT32 DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, FILETYPE type, CHttpDownLoadEvent*pListen, UINT64* pTaskID, BOOL bShowProgress = FALSE);
+			COMMON_API UINT32 DownLoad(LPCTSTR pszUrl, LPCTSTR pszLocalFilePath, FILETYPE type, CHttpDownLoadEvent*pListen, UINT64* pTaskID, BOOL bShowProgress = FALSE, BOOL bTempFileMode=FALSE);
 			COMMON_API UINT32 Stop(UINT64 TaskID);
 		}
 	}
