@@ -7,7 +7,7 @@
 #define MAX_SECTION   (256)
 #define MAX_FILE_SIZE (10 * 1024 * 1024)
 
-LogicCenter::LogicCenter() : m_seq(0), m_MainHtml_TaskID(0)
+LogicCenter::LogicCenter() : m_seq(0), m_MainHtml_TaskID(0), m_UpgradeFile_TaskID(0)
 {
 	m_strConfFilePath = Util::Path::GetDTmpFolder() + _T("\\FileConfig.ini");
 
@@ -17,6 +17,8 @@ LogicCenter::LogicCenter() : m_seq(0), m_MainHtml_TaskID(0)
 	Util::FileTrans::HttpDownLoad::DownLoad(_T("http://coursetest.miamusic.com/meten-tv.html"), m_strMainHtmlFile, Util::FileTrans::FILE_TYPE_NORMAL, this, &m_MainHtml_TaskID, FALSE, TRUE);
 
 	LoadConf();
+
+//	OnJsEvent_Upgrade(_T("2"), _T("http://coursetest.miamusic.com/meten-tv.html"), _T("02353456346346"));
 }
 
 LogicCenter::~LogicCenter()
@@ -125,9 +127,55 @@ void	LogicCenter::OnJsEvent_ExitFullScreen()
 
 void	LogicCenter::OnJsEvent_Upgrade(const CString& ver, const CString& url, const CString& md5)
 {
-	CString strText;
-	strText.Format(_T("ver: %s\nurl: %s\nmd5:%s"), ver, url, md5);
-	MessageBox(0, strText, _T("提示"), MB_OK);
+	UINT32	u32AskVer = _tcstoul((LPCTSTR)ver, NULL, 10);
+	if (u32AskVer <= PROG_VER)
+	{
+		Util::Log::Info(_T("TVCenter"), _T("stop upgrade, ask_ver: %u, local_ver: %u"), u32AskVer, PROG_VER);
+		return;
+	}
+
+	CString strUpgradeConf = Util::Path::GetDUpgradeFolder(TRUE) + _T("\\UpgradeConf.ini");
+
+	//是否正在进行
+	TCHAR szTemp[1024] = { 0 };
+	GetPrivateProfileString(_T("Main"), _T("Version"), _T(""), szTemp, sizeof(szTemp)-1, strUpgradeConf);
+	UINT32	u32Ver = _tcstoul(szTemp, NULL, 10);
+	Util::Log::Info(_T("TVCenter"), _T("stop upgrade, ask_ver: %u, upgrading_ver: %u, m_UpgradeFile_TaskID: %u"), u32AskVer, u32Ver, m_UpgradeFile_TaskID);
+	if (u32AskVer < u32Ver)
+	{
+		return;
+	}
+	else if (u32AskVer == u32Ver)
+	{
+		//可能升级被手工中止，需要check
+		if (m_UpgradeFile_TaskID)
+		{
+			return;
+		}
+
+		GetPrivateProfileString(_T("Main"), _T("State"), _T(""), szTemp, sizeof(szTemp)-1, strUpgradeConf);
+		CString	strState = szTemp;
+		if (!strState.CompareNoCase(_T("Finish")))
+		{
+			return;
+		}
+	}
+	if (m_UpgradeFile_TaskID)
+	{
+		Util::FileTrans::HttpDownLoad::Stop(m_UpgradeFile_TaskID);
+		m_UpgradeFile_TaskID = 0;
+	}
+	
+	CString	strFilePath;
+	strFilePath.Format(_T("%s\\ver_%u.exe"), Util::Path::GetDUpgradeFolder(TRUE), u32AskVer);
+	WritePrivateProfileString(_T("Main"), _T("FilePath"), strFilePath, strUpgradeConf);
+	WritePrivateProfileString(_T("Main"), _T("Md5"), md5, strUpgradeConf);
+	WritePrivateProfileString(_T("Main"), _T("State"), _T("Downing"), strUpgradeConf);
+	WritePrivateProfileString(_T("Main"), _T("Version"), ver, strUpgradeConf);
+
+	DeleteFile(strFilePath);
+	Util::Log::Info(_T("TVCenter"), _T("url: %s, del upgrad temp file: %s, hr: 0x%x"), url, strFilePath, GetLastError());
+	Util::FileTrans::HttpDownLoad::DownLoad(url, strFilePath, Util::FileTrans::FILE_TYPE_NORMAL, this, &m_UpgradeFile_TaskID, FALSE, TRUE);
 }
 
 BOOL LogicCenter::GetSections(vector<CString>& vSections)
@@ -316,6 +364,13 @@ void LogicCenter::OnHttpDownResult(UINT64 TaskID, UINT32 code)
 			Util::Log::Info(_T("TVCenter"), _T("mainhtml down fail id: %llu, path: %s, err: %u"), TaskID, m_strMainHtmlFile, code);
 		}
 		m_MainHtml_TaskID = 0;
+
+		return;
+	}
+	else if (TaskID == m_UpgradeFile_TaskID)
+	{
+		CString strUpgradeConf = Util::Path::GetDUpgradeFolder(TRUE) + _T("\\UpgradeConf.ini");
+		WritePrivateProfileString(_T("Main"), _T("State"), _T("Finish"), strUpgradeConf);
 
 		return;
 	}

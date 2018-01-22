@@ -56,6 +56,7 @@ private:
 	CString				m_strConfFilePath;
 	CString				m_strMainHtmlFile;
 	UINT64				m_MainHtml_TaskID;
+	UINT64				m_UpgradeFile_TaskID;
 	
 	void	GetFilePathList(map<CString, CString>& list);
 	BOOL	GetSections(vector<CString>& vSections);

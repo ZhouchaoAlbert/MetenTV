@@ -78,6 +78,9 @@ namespace Util
 		// 获取Tmp数据根目录
 		COMMON_API CString GetDTmpFolder(BOOL bCreateIfNotExist = FALSE);
 
+		// 获取Upgrad目录
+		COMMON_API CString GetDUpgradeFolder(BOOL bCreateIfNotExist = FALSE);
+
 		// 获取Url解析的缩略图片数据根目录
 		COMMON_API CString GetUrlThumbFolder(BOOL bCreateIfNotExist = FALSE);
 

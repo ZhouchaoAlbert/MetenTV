@@ -123,6 +123,21 @@ COMMON_API CString Util::Path::GetDTmpFolder(BOOL bCreateIfNotExist/* = FALSE*/)
 	return  strDir;
 }
 
+COMMON_API CString Util::Path::GetDUpgradeFolder(BOOL bCreateIfNotExist/* = FALSE*/)
+{
+//	ATLASSERT(0 != s_uid);
+
+	CString strDir;
+	strDir.Format(_T("%s\\Upgrade"), GetDataFolder());
+
+	if (FALSE != bCreateIfNotExist)
+	{
+		ValidDirPath(strDir);
+	}
+
+	return  strDir;
+}
+
 // 获取Url解析的缩略图片数据根目录
 COMMON_API CString Util::Path::GetUrlThumbFolder(BOOL bCreateIfNotExist/* = FALSE*/)
 {

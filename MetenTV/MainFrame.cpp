@@ -10,6 +10,8 @@
 #include "LogicCenter.h"
 #include "UtilString.h"
 #include "MD5Helper.h"
+#include "UtilLog.h"
+#include "UtilTools.h"
 
 CMainFrame::CMainFrame() : m_bFullScreen(FALSE)
 {
@@ -83,6 +85,40 @@ BOOL CMainFrame::CreateWnd(BOOL bPerfLaunch)
 	HICON hIcon = LoadIcon((HINSTANCE)GetModuleHandle(0), MAKEINTRESOURCE(IDI_MAIN));
 	SetIcon(hIcon, TRUE);
 	SetIcon(hIcon, FALSE);
+	
+	//ÊÇ·ñÉý¼¶
+	CString strUpgradeConf = Util::Path::GetDUpgradeFolder(TRUE) + _T("\\UpgradeConf.ini");
+	CString	strState;
+	CString strFilePath;
+	CString strMd5;
+	TCHAR szTemp[1024] = { 0 };
+	GetPrivateProfileString(_T("Main"), _T("Version"), _T(""), szTemp, sizeof(szTemp)-1, strUpgradeConf);
+	UINT32	u32Ver = _tcstoul(szTemp, NULL, 10);
+	GetPrivateProfileString(_T("Main"), _T("State"), _T(""), szTemp, sizeof(szTemp)-1, strUpgradeConf);
+	strState = szTemp;
+	GetPrivateProfileString(_T("Main"), _T("FilePath"), _T(""), szTemp, sizeof(szTemp)-1, strUpgradeConf);
+	strFilePath = szTemp;
+	GetPrivateProfileString(_T("Main"), _T("Md5"), _T(""), szTemp, sizeof(szTemp)-1, strUpgradeConf);
+	strMd5 = szTemp;
+
+	Util::Log::Info(_T("TVCenter"), _T("check upgrade conf_ver: %u, local_ver: %u, state: %s, filepath: %s, md5: %s"), u32Ver, PROG_VER, strState, strFilePath, strMd5);
+
+	if (u32Ver > PROG_VER)
+	{
+		if (!strState.CompareNoCase(_T("Finish")))
+		{
+			if (strFilePath.Find(Util::Path::GetDUpgradeFolder(TRUE), 0) >= 0)
+			{
+				CString hash;
+				Util::MD5::GetFileMD5Value(strFilePath, hash);
+				if (!strMd5.CompareNoCase(hash))
+				{
+					Util::Process::CreateProcessEx(strFilePath);
+					return TRUE;
+				}
+			}
+		}
+	}
 
 	if (bPerfLaunch)
 	{
@@ -129,6 +165,7 @@ BOOL CMainFrame::CreateWnd(BOOL bPerfLaunch)
 
 		if (Util::Path::IsFileExist(html_2))
 		{
+			::DeleteFile(html_1);
 			if (0 == ::MoveFile(html_2, html_1))
 			{
 
@@ -154,6 +191,7 @@ BOOL CMainFrame::CreateWnd(BOOL bPerfLaunch)
 
 			if (hash_1.CompareNoCase(hash_2))
 			{
+				::DeleteFile(html_1);
 				if (0 == ::MoveFile(html_2, html_1))
 				{
 				
