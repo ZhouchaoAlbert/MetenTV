@@ -107,13 +107,16 @@ BOOL CMainFrame::CreateWnd(BOOL bPerfLaunch)
 	{
 		if (!strState.CompareNoCase(_T("Finish")))
 		{
-			if (strFilePath.Find(Util::Path::GetDUpgradeFolder(TRUE), 0) >= 0)
+			CString strUpgradeFolder = Util::Path::GetDUpgradeFolder(TRUE);
+			if (strFilePath.Find(strUpgradeFolder, 0) >= 0)
 			{
 				CString hash;
 				Util::MD5::GetFileMD5Value(strFilePath, hash);
 				if (!strMd5.CompareNoCase(hash))
 				{
-					Util::Process::CreateProcessEx(strFilePath);
+//					Util::Process::CreateProcessEx(strFilePath);
+					::ShellExecute(0, _T("open"), strFilePath, 0, 0, SW_SHOWNORMAL);
+					::PostQuitMessage(0);
 					return TRUE;
 				}
 			}
