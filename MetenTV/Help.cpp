@@ -33,8 +33,8 @@ void ExecJavaScript(CefRefPtr<CefBrowser> browser, LPCTSTR szCmd, LPCSTR szJsonD
 	if (!args.get())
 		return;
 
-	USES_CONVERSION;
-	CStringA strCmdA = T2A(szCmd);
+	CStringA strCmdA;
+	Util::String::W_2_Utf8(szCmd, strCmdA);
 
 	ATL::CStringA strJsCode = "miaCPP2Js(\"";
 	strJsCode.Append(strCmdA);
@@ -159,9 +159,12 @@ BOOL Encode_Cpp2Js_FileList(const map<CString, CString>& list, CStringA& json_te
 	{
 		Json::Value val;
 
-		USES_CONVERSION;
-		val["id"] = T2A(it->first);
-		val["filepath"] = T2A(it->second);
+		CStringA strTemp;
+		
+		Util::String::W_2_Utf8(it->first, strTemp);
+		val["id"] = (LPCSTR)strTemp;
+		Util::String::W_2_Utf8(it->second, strTemp);		
+		val["filepath"] = (LPCSTR)strTemp;
 
 		arVal.append(val);
 	}	
@@ -177,9 +180,12 @@ BOOL Encode_Cpp2Js_DownComplete(const CString& id, const CString& filepath, CStr
 	Json::Value val;
 	json_op jop(val);
 
-	USES_CONVERSION;
-	jop.add("id", T2A(id));
-	jop.add("filepath", T2A(filepath));
+	CStringA strTemp;
+		
+	Util::String::W_2_Utf8(id, strTemp);
+	jop.add("id", (LPCSTR)strTemp);
+	Util::String::W_2_Utf8(filepath, strTemp);		
+	jop.add("filepath", (LPCSTR)strTemp);
 
 	json_text = writer.write(val).c_str();
 
@@ -195,8 +201,29 @@ BOOL Encode_Cpp2Js_MessageBox(const CString& text, CStringA& json_text)
 	Json::Value val;
 	json_op jop(val);
 
-	USES_CONVERSION;
-	jop.add("text", T2A(text));
+	CStringA strTemp;
+		
+	Util::String::W_2_Utf8(text, strTemp);
+	jop.add("text", (LPCSTR)strTemp);
+
+	json_text = writer.write(val).c_str();
+
+	return TRUE;
+}
+
+BOOL Encode_Cpp2Js_ReportVersion(const UINT32& local_ver, CStringA& json_text)
+{
+	Json::FastWriter writer;
+
+	Json::Value val;
+	json_op jop(val);
+
+	CString ver_text;
+	ver_text.Format(_T("%u"), local_ver);
+	
+	CStringA strTemp;		
+	Util::String::W_2_Utf8(ver_text, strTemp);
+	jop.add("ver", (LPCSTR)strTemp);
 
 	json_text = writer.write(val).c_str();
 

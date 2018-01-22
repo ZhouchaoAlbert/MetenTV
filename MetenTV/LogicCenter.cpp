@@ -125,6 +125,15 @@ void	LogicCenter::OnJsEvent_ExitFullScreen()
 	GetSafeChannel()->ExitFullScreen_Helper();
 }
 
+void	LogicCenter::OnJsEvent_QueryVersion()
+{
+	CStringA json_text;
+	if (Encode_Cpp2Js_ReportVersion(PROG_VER, json_text))
+	{
+		GetSafeChannel()->Cpp2Js(_T("reportVersion"), json_text);
+	}
+}
+
 void	LogicCenter::OnJsEvent_Upgrade(const CString& ver, const CString& url, const CString& md5)
 {
 	UINT32	u32AskVer = _tcstoul((LPCTSTR)ver, NULL, 10);

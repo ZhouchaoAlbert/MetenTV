@@ -19,6 +19,7 @@ public:
 	void	OnJsEvent_EnterFullScreen();
 	void	OnJsEvent_ExitFullScreen();
 	void	OnJsEvent_Upgrade(const CString& ver, const CString& url, const CString& md5);
+	void	OnJsEvent_QueryVersion();
 
 protected:
 	virtual void OnHttpDownProgress(UINT64 TaskID, UINT64 pos, UINT64 range, UINT64 speed, UINT32 remain_time);

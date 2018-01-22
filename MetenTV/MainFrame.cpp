@@ -305,7 +305,10 @@ LRESULT CMainFrame::OnJS2CPP(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHan
 		{
 			Singleton<LogicCenter>::Instance().OnJsEvent_Upgrade(ver, url, md5);
 		}
-
+	}
+	else if (!strCmd.CompareNoCase(_T("QueryVersion")))
+	{
+		Singleton<LogicCenter>::Instance().OnJsEvent_QueryVersion();
 	}
 
 	bHandled = TRUE;

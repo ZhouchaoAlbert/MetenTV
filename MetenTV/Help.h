@@ -16,6 +16,7 @@ BOOL Decode_Js2Cpp_Upgrade(const CStringA& strContent, CString& ver, CString& ur
 BOOL Encode_Cpp2Js_FileList(const map<CString, CString>& list, CStringA& json_text);
 BOOL Encode_Cpp2Js_DownComplete(const CString& id, const CString& filepath, CStringA& json_text);
 BOOL Encode_Cpp2Js_MessageBox(const CString& text, CStringA& json_text);
+BOOL Encode_Cpp2Js_ReportVersion(const UINT32& local_ver, CStringA& json_text);
 
 //Ö´ÐÐJS
 void ExecJavaScript(CefRefPtr<CefBrowser>browser, LPCTSTR szCmd, LPCSTR szJsonData);
@@ -36,5 +37,5 @@ public:
 ISafeChannel*	GetSafeChannel();
 void	SetSafeChannel(ISafeChannel* channel);
 
-#define PROG_VER (1)
+#define PROG_VER (1001)
 
