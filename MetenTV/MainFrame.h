@@ -30,8 +30,8 @@ public:
 		MESSAGE_HANDLER(WM_PAINT, OnPaint)
 	END_MSG_MAP()
 
-	virtual LRESULT Js2Cpp(const CString& cmd, const CStringA& param);
-	virtual LRESULT Cpp2Js(const CString& cmd, const CStringA& param);
+	virtual LRESULT Js2Cpp(const CString& cmd, const CString& param);
+	virtual LRESULT Cpp2Js(const std::wstring& cmd, const std::string& param);
 	virtual LRESULT EnterFullScreen_Helper();
 	virtual LRESULT ExitFullScreen_Helper();
 

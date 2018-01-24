@@ -2,6 +2,7 @@
 #include "BaseDefine.h"
 #include <atlstr.h>
 #include <vector>
+#include <string>
 using namespace std;
 using namespace ATL;
 
@@ -20,6 +21,11 @@ using namespace ATL;
 //CA2W pszW(pszU8, CP_UTF8);
 namespace Util
 {
+	namespace Convert
+	{
+		COMMON_API BOOL W_2_Utf8(LPCWSTR pszSrc, std::string& str);
+		COMMON_API BOOL W_2_Utf8(LPCWSTR pszSrc, CStringA& strDst);
+	}
 	namespace String
 	{
 		//Ansci - Unicode

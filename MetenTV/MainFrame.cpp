@@ -283,8 +283,8 @@ LRESULT CMainFrame::OnJS2CPP(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHan
 	}
 	else if (!strCmd.CompareNoCase(_T("syncList")))
 	{		
-		CStringA strContent;
-		Util::String::W_2_Utf8(strParam, strContent);
+		std::string strContent;
+		Util::Convert::W_2_Utf8(strParam, strContent);
 
 		map<CString, CString> list;
 		if (Decode_Js2Cpp_SyncList(strContent, list))
@@ -305,8 +305,8 @@ LRESULT CMainFrame::OnJS2CPP(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHan
 	}
 	else if (!strCmd.CompareNoCase(_T("upgrade")))
 	{
-		CStringA strContent;
-		Util::String::W_2_Utf8(strParam, strContent);
+		std::string strContent;
+		Util::Convert::W_2_Utf8(strParam, strContent);
 
 		CString ver;
 		CString url;
@@ -325,15 +325,15 @@ LRESULT CMainFrame::OnJS2CPP(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHan
 	return 0;
 }
 
-LRESULT CMainFrame::Js2Cpp(const CString& cmd, const CStringA& param)
+LRESULT CMainFrame::Js2Cpp(const CString& cmd, const CString& param)
 {
 	PostMessage(WM_JS2CPP, (WPARAM)cmd.AllocSysString(), (LPARAM)param.AllocSysString());
 	return 0L;
 }
 
-LRESULT CMainFrame::Cpp2Js(const CString& cmd, const CStringA& param)
+LRESULT CMainFrame::Cpp2Js(const std::wstring& cmd, const std::string& param)
 {
-	ExecJavaScript(m_pBrowser, cmd, param);
+	ExecJavaScript(m_pBrowser, cmd.c_str(), param.c_str());
 	return 0L;
 }
 

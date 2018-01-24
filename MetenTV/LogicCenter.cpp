@@ -127,7 +127,7 @@ void	LogicCenter::OnJsEvent_ExitFullScreen()
 
 void	LogicCenter::OnJsEvent_QueryVersion()
 {
-	CStringA json_text;
+	std::string json_text;
 	if (Encode_Cpp2Js_ReportVersion(PROG_VER, json_text))
 	{
 		GetSafeChannel()->Cpp2Js(_T("reportVersion"), json_text);
@@ -331,7 +331,7 @@ void	LogicCenter::SaveConf(const CString& id/* = _T("")*/)
 
 void	LogicCenter::CallJs_LocalList(const map<CString, CString>& list)	//id->filepath
 {
-	CStringA json_text;
+	std::string json_text;
 	if (Encode_Cpp2Js_FileList(list, json_text))
 	{
 		GetSafeChannel()->Cpp2Js(_T("fileList"), json_text);
@@ -340,7 +340,7 @@ void	LogicCenter::CallJs_LocalList(const map<CString, CString>& list)	//id->file
 
 void	LogicCenter::CallJs_DownCompleted(const CString& id, const CString& filepath)
 {
-	CStringA json_text;
+	std::string json_text;
 	if (Encode_Cpp2Js_DownComplete(id, filepath, json_text))
 	{
 		GetSafeChannel()->Cpp2Js(_T("notifyDownComplete"), json_text);
@@ -349,7 +349,7 @@ void	LogicCenter::CallJs_DownCompleted(const CString& id, const CString& filepat
 
 void	LogicCenter::CallJs_MessageBox(const CString& text)
 {
-	CStringA json_text;
+	std::string json_text;
 	if (Encode_Cpp2Js_MessageBox(text, json_text))
 	{
 		GetSafeChannel()->Cpp2Js(_T("notifyMessageBox"), json_text);

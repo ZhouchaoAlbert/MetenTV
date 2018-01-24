@@ -153,12 +153,16 @@ bool CCefBrowserEventHandler::OnProcessMessageReceived(CefRefPtr<CefBrowser> bro
 		ATL::CString strJsonData1((const wchar_t*)strJsonData.c_str(), strJsonData.length());
 		
 		CStringA strContent;
-		Util::String::W_2_Utf8(strJsonData1, strContent);
+		Util::Convert::W_2_Utf8(strJsonData1, strContent);
 
 		static UINT32 s_count = 0;
 		Util::Log::Info(_T("MentenPV"), _T("Func:%s,JS:Cmd: %s,Json:%s"), strFuncName1, scmd1, strJsonData1);
+		if (!scmd1.CompareNoCase(_T("SyncList")))
+		{
+			int k = 0;
+		}
 
-		GetSafeChannel()->Js2Cpp(scmd1, strContent);
+		GetSafeChannel()->Js2Cpp(scmd1, strJsonData1);
 
 		//TCHAR szText[256];
 		//_tprintf(_T("FuncName=%s, CMD=%s, JsonData=%s"), strFuncName1, scmd1, strJsonData1);

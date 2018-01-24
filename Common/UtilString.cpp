@@ -83,6 +83,26 @@ BOOL Util::String::W_2_Utf8(LPCWSTR pszSrc, CStringA& strDst)
 	return TRUE;
 }
 
+BOOL Util::Convert::W_2_Utf8(LPCWSTR pszSrc, std::string& str)
+{
+	int n = WideCharToMultiByte(CP_UTF8, 0, pszSrc, -1, 0, 0, 0, 0);
+	str.resize(n);
+	::WideCharToMultiByte(CP_UTF8, 0, pszSrc, -1, (char*)str.data(), str.length(), 0, 0);
+
+	return TRUE;
+}
+
+BOOL Util::Convert::W_2_Utf8(LPCWSTR pszSrc, CStringA& strDst)
+{
+	int n = WideCharToMultiByte(CP_UTF8, 0, pszSrc, -1, 0, 0, 0, 0);
+	std::string str;
+	str.resize(n);
+	::WideCharToMultiByte(CP_UTF8, 0, pszSrc, -1, (char*)str.data(), str.length(), 0, 0);
+	strDst = CStringA((char*)str.data(), str.length());
+
+	return TRUE;
+}
+
  BOOL A_2_Utf8(LPCSTR pszSrc, CStringA& strDst)
  {
 	try
