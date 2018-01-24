@@ -115,7 +115,10 @@ BOOL CMainFrame::CreateWnd(BOOL bPerfLaunch)
 				if (!strMd5.CompareNoCase(hash))
 				{
 //					Util::Process::CreateProcessEx(strFilePath);
-					::ShellExecute(0, _T("open"), strFilePath, 0, 0, SW_SHOWNORMAL);
+					if (::MessageBox(NULL, _T("发现新版本，您需要先更新安装包后再使用"), _T("升级提示"), MB_ICONINFORMATION | MB_OK) == IDOK)
+					{
+						::ShellExecute(0, _T("open"), strFilePath, 0, 0, SW_SHOWNORMAL);
+					}
 					::PostQuitMessage(0);
 					return TRUE;
 				}
