@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClCompile Include="CefBrowserApp.cpp" />
     <ClCompile Include="CefBrowserEventHandler.cpp" />
+    <ClCompile Include="UpdatePromptDlg.cpp" />
     <ClCompile Include="DevTool.cpp" />
     <ClCompile Include="Help.cpp" />
     <ClCompile Include="LogicCenter.cpp" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="CefBrowserApp.h" />
     <ClInclude Include="CefBrowserEventHandler.h" />
+    <ClInclude Include="UpdatePromptDlg.h" />
     <ClInclude Include="DevTool.h" />
     <ClInclude Include="DevToolSink.h" />
     <ClInclude Include="Help.h" />
@@ -181,4 +183,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="MeilianTV.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
