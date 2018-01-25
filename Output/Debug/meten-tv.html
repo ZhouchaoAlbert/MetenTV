@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>美联电视台</title>
-  <script src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>
+  <!--<script src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js"></script>-->
   <script>
     // init vConsole
-    var vConsole = new VConsole();
+    //var vConsole = new VConsole();
   </script>
   <link rel="stylesheet"
         href="http://mia-upload.oss-cn-shanghai.aliyuncs.com/course/static/video-js-6.3.3/video-js.min.css?_=14">
@@ -483,6 +483,13 @@
       font-size: 22px
     }
 
+    .root.tv.live .vjs-progress-control {
+      opacity:0;
+    }
+
+    .root.tv.live .vjs-remaining-time-display {
+      opacity:0;
+    }
     /*videojs*/
     .vjs-volume-panel {
       display: none !important;
@@ -500,12 +507,12 @@
       src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/course/static/videojs-contrib-hls.5.12.2.min.js?_=14"></script>
   <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/reconnect-websocket.js?_=14"></script>
   <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/Base64.js"></script>
-  <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/main.js?_=76"></script>
+  <script src="http://mia-upload.oss-cn-shanghai.aliyuncs.com/meten/static/main.js?_=77"></script>
   <!--<script src="./main.js?_=36"></script>-->
 </head>
 <body>
 <div class="root">
-  <p class="log"></p>
+  <!--<p class="log"></p>-->
   <div class="root tv">
     <div class="top">
       <div class="container">
