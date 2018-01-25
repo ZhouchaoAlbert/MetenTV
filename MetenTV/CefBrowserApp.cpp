@@ -2,7 +2,7 @@
 #include "CefBrowserApp.h"
 #include"V8JSHandler.h"
 
-#define CEF_2623 1
+//#define CEF_2623 1
 CCefBrowserApp::CCefBrowserApp()
 {
 	AddCommandLine(_T("disable-gpu"), _T("disable-gpu"));

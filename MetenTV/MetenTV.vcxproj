@@ -55,7 +55,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_ATL_NO_COM_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\libcef_2623\;..\Include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libcef_2924\;..\Include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -81,6 +81,7 @@
       <AdditionalLibraryDirectories>..\Lib\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ComCtl32.lib;JsonCppLibD.lib;CommonD.lib;libcurlD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>..\Output\PdbD\$(TargetName).pdb</ProgramDatabaseFile>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -89,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_ATL_NO_COM_SUPPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\libcef_2623\;..\Include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libcef_2924\;..\Include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -117,6 +118,7 @@
       <AdditionalLibraryDirectories>..\Lib\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ComCtl32.lib;JsonCppLib.lib;Common.lib;libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ProgramDatabaseFile>..\Output\Pdb\$(TargetName).pdb</ProgramDatabaseFile>
+      <LargeAddressAware>true</LargeAddressAware>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

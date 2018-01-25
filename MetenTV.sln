@@ -1,20 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcef_2623(XP)", "libcef_2623\libcef_2623.vcxproj", "{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{5589D891-F388-4594-8AAF-DACE0EAE4AB3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5999D72C-0AB6-4DE2-8ED3-A4FAAAAA9A29} = {5999D72C-0AB6-4DE2-8ED3-A4FAAAAA9A29}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JsonCppLib", "JsonCppLib\JsonCppLib.vcxproj", "{5999D72C-0AB6-4DE2-8ED3-A4FAAAAA9A29}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MetenTV", "MetenTV\MetenTV.vcxproj", "{322650B0-9A3A-478D-AC03-975BC6511659}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA} = {7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}
 		{5999D72C-0AB6-4DE2-8ED3-A4FAAAAA9A29} = {5999D72C-0AB6-4DE2-8ED3-A4FAAAAA9A29}
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84} = {D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}
 		{5589D891-F388-4594-8AAF-DACE0EAE4AB3} = {5589D891-F388-4594-8AAF-DACE0EAE4AB3}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcef_2924", "libcef_2924\libcef_2924.vcxproj", "{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,14 +27,6 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.Debug|Win32.Build.0 = Debug|Win32
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.NonXP_Debug|Win32.ActiveCfg = NonXP_Debug|Win32
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.NonXP_Debug|Win32.Build.0 = NonXP_Debug|Win32
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.NonXP_Release|Win32.ActiveCfg = NonXP_Release|Win32
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.NonXP_Release|Win32.Build.0 = NonXP_Release|Win32
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.Release|Win32.ActiveCfg = Release|Win32
-		{D2121F3E-7CE4-43CB-812E-4B7F96CDFF84}.Release|Win32.Build.0 = Release|Win32
 		{5589D891-F388-4594-8AAF-DACE0EAE4AB3}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5589D891-F388-4594-8AAF-DACE0EAE4AB3}.Debug|Win32.Build.0 = Debug|Win32
 		{5589D891-F388-4594-8AAF-DACE0EAE4AB3}.NonXP_Debug|Win32.ActiveCfg = Debug|Win32
@@ -56,6 +51,14 @@ Global
 		{322650B0-9A3A-478D-AC03-975BC6511659}.NonXP_Release|Win32.Build.0 = Release|Win32
 		{322650B0-9A3A-478D-AC03-975BC6511659}.Release|Win32.ActiveCfg = Release|Win32
 		{322650B0-9A3A-478D-AC03-975BC6511659}.Release|Win32.Build.0 = Release|Win32
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.Debug|Win32.Build.0 = Debug|Win32
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.NonXP_Debug|Win32.ActiveCfg = Debug|Win32
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.NonXP_Debug|Win32.Build.0 = Debug|Win32
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.NonXP_Release|Win32.ActiveCfg = Release|Win32
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.NonXP_Release|Win32.Build.0 = Release|Win32
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.Release|Win32.ActiveCfg = Release|Win32
+		{7EEA3A09-D3E8-4737-BCC5-EE3D05FCB7AA}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
