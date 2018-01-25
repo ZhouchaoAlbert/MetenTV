@@ -378,9 +378,19 @@ void LogicCenter::OnHttpDownResult(UINT64 TaskID, UINT32 code)
 	}
 	else if (TaskID == m_UpgradeFile_TaskID)
 	{
-		CString strUpgradeConf = Util::Path::GetDUpgradeFolder(TRUE) + _T("\\UpgradeConf.ini");
-		WritePrivateProfileString(_T("Main"), _T("State"), _T("Finish"), strUpgradeConf);
+		if (Util::FileTrans::c_suc == code)
+		{
+			Util::Log::Info(_T("TVCenter"), _T("mainhtml suc id: %llu"), TaskID);
 
+			CString strUpgradeConf = Util::Path::GetDUpgradeFolder(TRUE) + _T("\\UpgradeConf.ini");
+			WritePrivateProfileString(_T("Main"), _T("State"), _T("Finish"), strUpgradeConf);
+		}
+		else
+		{
+			Util::Log::Info(_T("TVCenter"), _T("mainhtml down fail id: %llu, err: %u"), TaskID, code);
+		}
+		m_UpgradeFile_TaskID = 0;
+		
 		return;
 	}
 

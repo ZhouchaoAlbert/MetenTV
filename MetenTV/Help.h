@@ -37,5 +37,5 @@ public:
 ISafeChannel*	GetSafeChannel();
 void	SetSafeChannel(ISafeChannel* channel);
 
-#define PROG_VER (1004)
+#define PROG_VER (1005)
 
