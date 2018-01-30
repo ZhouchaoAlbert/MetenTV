@@ -1,0 +1,6 @@
+mkdir "Output\CefRes"
+mkdir "Output\CefRes\locales"
+copy   "Output\Cef\CefLib_2924\*" "Lib"
+copy   "Output\Cef\CefRes_2924\*" "Output\CefRes"
+copy   "Output\Cef\CefRes_2924\locales\*" "Output\CefRes\locales"
+copy   "Output\Cef\CefOut_2924\*" "Output\Release"

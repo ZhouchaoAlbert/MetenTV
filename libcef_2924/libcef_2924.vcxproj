@@ -89,12 +89,10 @@ copy   "..\Output\Cef\CefOut_2924\*" "..\Output\Debug"</Command>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "..\Output\CefRes"
-mkdir "..\Output\CefRes\locales"
-copy   "..\Output\Cef\CefLib_2924\*" "..\Lib"
-copy   "..\Output\Cef\CefRes_2924\*" "..\Output\CefRes"
-copy   "..\Output\Cef\CefRes_2924\locales\*" "..\Output\CefRes\locales"
-copy   "..\Output\Cef\CefOut_2924\*" "..\Output\Release"</Command>
+      <Command>cd ..\
+cef2924.bat
+
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

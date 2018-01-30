@@ -98,12 +98,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "..\Output\CefRes"
-mkdir "..\Output\CefRes\locales"
-copy   "..\Output\Cef\CefLib_XP_2623\*" "..\Lib"
-copy   "..\Output\Cef\CefRes_XP_2623\*" "..\Output\CefRes"
-copy   "..\Output\Cef\CefRes_XP_2623\locales\*" "..\Output\CefRes\locales"
-copy   "..\Output\Cef\CefOut_XP_2623\*" "..\Output\Debug"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='NonXP_Debug|Win32'">
@@ -144,12 +140,8 @@ copy   "..\Output\Cef\CefOut_XP_2623\*" "..\Output\Debug"</Command>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>mkdir "..\Output\CefRes"
-mkdir "..\Output\CefRes\locales"
-copy   "..\Output\Cef\CefLib_XP_2623\*" "..\Lib"
-copy   "..\Output\Cef\CefRes_XP_2623\*" "..\Output\CefRes"
-copy   "..\Output\Cef\CefRes_XP_2623\locales\*" "..\Output\CefRes\locales"
-copy   "..\Output\Cef\CefOut_XP_2623\*" "..\Output\Release"</Command>
+      <Command>cd ..\
+cef2623.bat</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='NonXP_Release|Win32'">
