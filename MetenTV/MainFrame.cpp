@@ -13,15 +13,23 @@
 #include "UtilLog.h"
 #include "UtilTools.h"
 #include "UpdatePromptDlg.h"
+#include "Utilkobj.h"
 
 CMainFrame::CMainFrame() : m_bFullScreen(FALSE)
 {
 	memset(&m_rcFullScreenRect, 0, sizeof(m_rcFullScreenRect));
 	memset(&m_wpPrev, 0, sizeof(m_wpPrev));
+
+	m_hMutex = Util::kObj::CreateMutexFormat(_T("Proc_MetenTV_IPC_SHMDATA"));
 }
 
 CMainFrame::~CMainFrame()
 {
+	if (m_hMutex)
+	{
+		CloseHandle(m_hMutex);
+		m_hMutex = NULL;
+	}
 	if (NULL != m_hWnd)
 	{
 		DestroyWindow();
@@ -225,13 +233,32 @@ BOOL CMainFrame::CreateWnd(BOOL bPerfLaunch)
 		::PostQuitMessage(0);
 		return TRUE;
 	}
+
+	SetTimer(1, 1000, NULL);
 	
 	return TRUE;
 }
 
 LRESULT CMainFrame::OnTimer(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
-//	FullScreenView();
+	if (1 == wParam)
+	{
+		HANDLE hMutex = Util::kObj::OpenMutexFormat(_T("Proc_MetenTV_IPC_Unique"));
+		if (hMutex)
+		{
+			Util::kObj::CMutexLifeWrapper objMutex(hMutex);
+		}
+		else
+		{
+#ifdef DEBUG
+			Util::Process::CreateProcessEx(Util::Path::GetExeFolder() + _T("\\MetenTVProtectD.exe"));
+#else
+			Util::Process::CreateProcessEx(Util::Path::GetExeFolder() + _T("\\MetenTVProtect.exe"));
+#endif
+		}
+	}
+
+
 	return S_OK;
 }
 
@@ -413,10 +440,27 @@ void CMainFrame::HideTaskBar(BOOL bHide)
 		nCmdShow = SW_SHOW;
 		lParam = ABS_ALWAYSONTOP;
 	}
-
 	::ShowWindow(hWnd, nCmdShow);//隐藏任务栏
+	BOOL bIsHide = ::IsWindowVisible(hWnd);
+	HideTaskBarHelper(hWnd, lParam);
 
+	Util::kObj::CAutoMutex	mutex(m_hMutex);
+	if (mutex.CanAccess())
+	{
+		//已经处于隐藏状态，而本程序要显示，则恢复标志
+		if (bIsHide != FALSE && bHide == FALSE)
+		{
+			*(BOOL*)m_shm.GetBuf() = FALSE;
+		}
+		else if (bIsHide == FALSE && bHide != FALSE)
+		{
+			*(BOOL*)m_shm.GetBuf() = TRUE;
+		}
+	}	
+}
 
+BOOL CMainFrame::HideTaskBarHelper(HWND hWnd, LPARAM lParam)
+{
 #ifndef ABM_SETSTATE 
 #define ABM_SETSTATE 0x0000000a 
 #endif
@@ -430,6 +474,8 @@ void CMainFrame::HideTaskBar(BOOL bHide)
 		apBar.lParam = lParam;
 		SHAppBarMessage(ABM_SETSTATE, &apBar); //设置任务栏自动隐藏
 	}
+
+	return TRUE;
 }
 
 LRESULT CMainFrame::OnEraseBkgnd(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
@@ -446,4 +492,11 @@ LRESULT CMainFrame::OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHand
 
 	bHandled = TRUE;
 	return TRUE;
+}
+
+LRESULT CMainFrame::OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+{
+	HideTaskBar(FALSE);
+
+	return 0;
 }

@@ -6,6 +6,7 @@
 #include "include/cef_client.h"
 #include "include/cef_app.h" 
 #include "Help.h"
+#include "ShmObj.h"
 
 using namespace ATL;
 
@@ -28,6 +29,7 @@ public:
 		MESSAGE_HANDLER(WM_GETMINMAXINFO, OnGetMinMaxInfo)
 		MESSAGE_HANDLER(WM_ERASEBKGND, OnEraseBkgnd)
 		MESSAGE_HANDLER(WM_PAINT, OnPaint)
+		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
 	END_MSG_MAP()
 
 	virtual LRESULT Js2Cpp(const CString& cmd, const CString& param);
@@ -41,7 +43,7 @@ public:
 	LRESULT OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT OnEraseBkgnd(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 	LRESULT OnPaint(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
-
+	LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 private:
 	CefRefPtr<CefBrowser> m_pBrowser;
 	void OnFinalMessage(HWND hwnd)
@@ -51,8 +53,11 @@ private:
 
 	BOOL m_bFullScreen;
 	RECT m_rcFullScreenRect;
+	CShmObj m_shm;
+	HANDLE  m_hMutex;
 	WINDOWPLACEMENT m_wpPrev;
 	void FullScreenView(BOOL bFullScreen);
 	void HideTaskBar(BOOL bHide);
+	BOOL HideTaskBarHelper(HWND hWnd, LPARAM lParam);
 };
 
